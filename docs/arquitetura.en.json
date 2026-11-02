@@ -1,0 +1,265 @@
+{
+ "largura": 1180,
+ "altura": 670,
+ "zonas": [
+  {
+   "tipo": "internet",
+   "rotulo": "Who calls the API",
+   "x": 16,
+   "y": 16,
+   "w": 310,
+   "h": 630
+  },
+  {
+   "tipo": "aws",
+   "rotulo": "AWS Organizations · workloads OU",
+   "x": 346,
+   "y": 16,
+   "w": 818,
+   "h": 630
+  }
+ ],
+ "caixas": [
+  {
+   "id": "br",
+   "estilo": "destaque",
+   "titulo": "Person in Brazil or US",
+   "linhas": [
+    "console or CLI"
+   ],
+   "x": 36,
+   "y": 108,
+   "w": 270,
+   "h": 70
+  },
+  {
+   "id": "svc",
+   "estilo": "destaque",
+   "titulo": "Lambda → DynamoDB",
+   "linhas": [
+    "`aws:ViaAWSService`"
+   ],
+   "x": 36,
+   "y": 198,
+   "w": 270,
+   "h": 70
+  },
+  {
+   "id": "vpce",
+   "estilo": "destaque",
+   "titulo": "App via VPC Endpoint",
+   "linhas": [
+    "`aws:SourceVpce vpce-*`"
+   ],
+   "x": 36,
+   "y": 288,
+   "w": 270,
+   "h": 70
+  },
+  {
+   "id": "v2",
+   "estilo": "destaque",
+   "titulo": "RunInstances with IMDSv2",
+   "linhas": [
+    "`HttpTokens=required`"
+   ],
+   "x": 36,
+   "y": 378,
+   "w": 270,
+   "h": 70
+  },
+  {
+   "id": "fora",
+   "estilo": "bloqueio",
+   "titulo": "IP outside Brazil and US",
+   "linhas": [
+    "foreign VPN, bot"
+   ],
+   "x": 36,
+   "y": 474,
+   "w": 270,
+   "h": 64
+  },
+  {
+   "id": "v1",
+   "estilo": "bloqueio",
+   "titulo": "RunInstances with IMDSv1",
+   "linhas": [
+    "or hop limit above 2"
+   ],
+   "x": 36,
+   "y": 556,
+   "w": 270,
+   "h": 64
+  },
+  {
+   "id": "scp",
+   "estilo": "destaque",
+   "titulo": "OU SCPs (deny list)",
+   "linhas": [
+    "evaluated before the IAM policy"
+   ],
+   "regras": [
+    {
+     "n": "1",
+     "y": 96,
+     "texto": "IP from Brazil or US",
+     "selo": "allows",
+     "sub": [
+      "aws:SourceIp · 270 /13 blocks (LACNIC + ARIN)"
+     ]
+    },
+    {
+     "n": "2",
+     "y": 186,
+     "texto": "AWS service call",
+     "selo": "allows",
+     "sub": [
+      "aws:ViaAWSService = true"
+     ]
+    },
+    {
+     "n": "3",
+     "y": 276,
+     "texto": "came through VPC Endpoint",
+     "selo": "allows",
+     "sub": [
+      "aws:SourceVpce = vpce-*"
+     ]
+    },
+    {
+     "n": "4",
+     "y": 366,
+     "texto": "IMDSv2 and hop limit up to 2",
+     "selo": "allows",
+     "sub": [
+      "MetadataHttpTokens = required"
+     ]
+    }
+   ],
+   "x": 380,
+   "y": 52,
+   "w": 380,
+   "h": 400
+  },
+  {
+   "id": "deny",
+   "estilo": "bloqueio",
+   "titulo": "Explicit Deny (AccessDenied)",
+   "linhas": [
+    "beats any Allow,",
+    "including the account admin and root"
+   ],
+   "x": 380,
+   "y": 470,
+   "w": 380,
+   "h": 136
+  },
+  {
+   "id": "iam",
+   "estilo": "neutra",
+   "titulo": "Account IAM policy",
+   "linhas": [
+    "only now decides what",
+    "each person can do"
+   ],
+   "x": 810,
+   "y": 182,
+   "w": 330,
+   "h": 92
+  },
+  {
+   "id": "api",
+   "estilo": "destaque",
+   "titulo": "API runs",
+   "linhas": [
+    "EC2 · DynamoDB · S3 · ..."
+   ],
+   "x": 810,
+   "y": 340,
+   "w": 330,
+   "h": 80
+  },
+  {
+   "id": "mgmt",
+   "estilo": "tracejada",
+   "titulo": "Management account",
+   "linhas": [
+    "SCPs do not apply:",
+    "never run workloads here"
+   ],
+   "x": 810,
+   "y": 486,
+   "w": 330,
+   "h": 92
+  }
+ ],
+ "setas": [
+  {
+   "de": "br",
+   "para": "scp",
+   "reta": true,
+   "desloc_para": -109
+  },
+  {
+   "de": "svc",
+   "para": "scp",
+   "reta": true,
+   "desloc_para": -19
+  },
+  {
+   "de": "vpce",
+   "para": "scp",
+   "reta": true,
+   "desloc_para": 71
+  },
+  {
+   "de": "v2",
+   "para": "scp",
+   "reta": true,
+   "desloc_para": 161
+  },
+  {
+   "de": "fora",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": -32
+  },
+  {
+   "de": "v1",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": 50
+  },
+  {
+   "de": "scp",
+   "para": "iam",
+   "rotulo": "passes",
+   "desloc_de": -24,
+   "desloc_para": 0
+  },
+  {
+   "de": "iam",
+   "para": "api",
+   "sai": "b",
+   "entra": "t",
+   "rotulo": "allow"
+  }
+ ],
+ "textos": [
+  {
+   "x": 380,
+   "y": 636,
+   "texto": "Who gets through",
+   "mono": true
+  },
+  {
+   "x": 810,
+   "y": 636,
+   "texto": "Where it goes",
+   "mono": true
+  }
+ ],
+ "assinatura": true,
+ "assinatura_texto": "nicloud.me"
+}
