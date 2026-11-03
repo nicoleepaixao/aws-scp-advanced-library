@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: JSON is valid
+        run: for f in policies/*/*.json; do python -m json.tool "$f" > /dev/null || exit 1; done
+      - name: Tests
+        run: |
+          pip install pytest
+          pytest -v
+      - name: Shell script
+        run: bash -n policies/geo-restriction/generate-country-cidrs.sh

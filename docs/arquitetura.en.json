@@ -1,6 +1,6 @@
 {
  "largura": 1180,
- "altura": 670,
+ "altura": 870,
  "zonas": [
   {
    "tipo": "internet",
@@ -8,7 +8,7 @@
    "x": 16,
    "y": 16,
    "w": 310,
-   "h": 630
+   "h": 830
   },
   {
    "tipo": "aws",
@@ -16,16 +16,16 @@
    "x": 346,
    "y": 16,
    "w": 818,
-   "h": 630
+   "h": 830
   }
  ],
  "caixas": [
   {
-   "id": "br",
+   "id": "ok0",
    "estilo": "destaque",
-   "titulo": "Person in Brazil or US",
+   "titulo": "Developer, approved Region",
    "linhas": [
-    "console or CLI"
+    "with the 3 required tags"
    ],
    "x": 36,
    "y": 108,
@@ -33,7 +33,7 @@
    "h": 70
   },
   {
-   "id": "svc",
+   "id": "ok1",
    "estilo": "destaque",
    "titulo": "Lambda → DynamoDB",
    "linhas": [
@@ -45,11 +45,11 @@
    "h": 70
   },
   {
-   "id": "vpce",
+   "id": "ok2",
    "estilo": "destaque",
-   "titulo": "App via VPC Endpoint",
+   "titulo": "Platform role",
    "linhas": [
-    "`aws:SourceVpce vpce-*`"
+    "break-glass · Control Tower"
    ],
    "x": 36,
    "y": 288,
@@ -57,40 +57,76 @@
    "h": 70
   },
   {
-   "id": "v2",
-   "estilo": "destaque",
-   "titulo": "RunInstances with IMDSv2",
+   "id": "b0",
+   "estilo": "bloqueio",
+   "titulo": "Call to eu-west-1",
    "linhas": [
-    "`HttpTokens=required`"
+    "Region not approved"
    ],
    "x": 36,
-   "y": 378,
+   "y": 398,
    "w": 270,
-   "h": 70
+   "h": 58
   },
   {
-   "id": "fora",
+   "id": "b1",
+   "estilo": "bloqueio",
+   "titulo": "Access key or log off",
+   "linhas": [
+    "CreateAccessKey · StopLogging"
+   ],
+   "x": 36,
+   "y": 468,
+   "w": 270,
+   "h": 58
+  },
+  {
+   "id": "b2",
+   "estilo": "bloqueio",
+   "titulo": "No encryption",
+   "linhas": [
+    "EBS unencrypted · S3 over HTTP"
+   ],
+   "x": 36,
+   "y": 538,
+   "w": 270,
+   "h": 58
+  },
+  {
+   "id": "b3",
+   "estilo": "bloqueio",
+   "titulo": "Instance without tags",
+   "linhas": [
+    "owner missing"
+   ],
+   "x": 36,
+   "y": 608,
+   "w": 270,
+   "h": 58
+  },
+  {
+   "id": "b4",
    "estilo": "bloqueio",
    "titulo": "IP outside Brazil and US",
    "linhas": [
     "foreign VPN, bot"
    ],
    "x": 36,
-   "y": 474,
+   "y": 678,
    "w": 270,
-   "h": 64
+   "h": 58
   },
   {
-   "id": "v1",
+   "id": "b5",
    "estilo": "bloqueio",
    "titulo": "RunInstances with IMDSv1",
    "linhas": [
     "or hop limit above 2"
    ],
    "x": 36,
-   "y": 556,
+   "y": 748,
    "w": 270,
-   "h": 64
+   "h": 58
   },
   {
    "id": "scp",
@@ -103,44 +139,62 @@
     {
      "n": "1",
      "y": 96,
-     "texto": "IP from Brazil or US",
+     "texto": "Approved Region",
      "selo": "allows",
      "sub": [
-      "aws:SourceIp · 270 /13 blocks (LACNIC + ARIN)"
+      "us-east-1 · sa-east-1 · global services"
      ]
     },
     {
      "n": "2",
-     "y": 186,
-     "texto": "AWS service call",
+     "y": 166,
+     "texto": "IAM and security baseline",
      "selo": "allows",
      "sub": [
-      "aws:ViaAWSService = true"
+      "no access keys · CloudTrail stays on"
      ]
     },
     {
      "n": "3",
-     "y": 276,
-     "texto": "came through VPC Endpoint",
+     "y": 236,
+     "texto": "Encryption and TLS",
      "selo": "allows",
      "sub": [
-      "aws:SourceVpce = vpce-*"
+      "EBS · RDS · EFS · S3"
      ]
     },
     {
      "n": "4",
-     "y": 366,
-     "texto": "IMDSv2 and hop limit up to 2",
+     "y": 306,
+     "texto": "Required tags",
+     "selo": "allows",
+     "sub": [
+      "owner · cost-center · environment"
+     ]
+    },
+    {
+     "n": "5",
+     "y": 376,
+     "texto": "IMDSv2, hop limit up to 2",
      "selo": "allows",
      "sub": [
       "MetadataHttpTokens = required"
+     ]
+    },
+    {
+     "n": "6",
+     "y": 446,
+     "texto": "IP from Brazil or US",
+     "selo": "allows",
+     "sub": [
+      "270 /13 blocks · or VPC endpoint"
      ]
     }
    ],
    "x": 380,
    "y": 52,
    "w": 380,
-   "h": 400
+   "h": 480
   },
   {
    "id": "deny",
@@ -151,9 +205,9 @@
     "including the account admin and root"
    ],
    "x": 380,
-   "y": 470,
+   "y": 560,
    "w": 380,
-   "h": 136
+   "h": 240
   },
   {
    "id": "iam",
@@ -163,9 +217,9 @@
     "only now decides what",
     "each person can do"
    ],
-   "x": 810,
-   "y": 182,
-   "w": 330,
+   "x": 870,
+   "y": 246,
+   "w": 280,
    "h": 92
   },
   {
@@ -173,11 +227,11 @@
    "estilo": "destaque",
    "titulo": "API runs",
    "linhas": [
-    "EC2 · DynamoDB · S3 · ..."
+    "EC2 · RDS · S3 · Lambda · ..."
    ],
-   "x": 810,
-   "y": 340,
-   "w": 330,
+   "x": 870,
+   "y": 420,
+   "w": 280,
    "h": 80
   },
   {
@@ -188,54 +242,72 @@
     "SCPs do not apply:",
     "never run workloads here"
    ],
-   "x": 810,
-   "y": 486,
-   "w": 330,
+   "x": 870,
+   "y": 640,
+   "w": 280,
    "h": 92
   }
  ],
  "setas": [
   {
-   "de": "br",
+   "de": "ok0",
    "para": "scp",
    "reta": true,
-   "desloc_para": -109
+   "desloc_para": -149
   },
   {
-   "de": "svc",
+   "de": "ok1",
    "para": "scp",
    "reta": true,
-   "desloc_para": -19
+   "desloc_para": -59
   },
   {
-   "de": "vpce",
+   "de": "ok2",
    "para": "scp",
    "reta": true,
-   "desloc_para": 71
+   "desloc_para": 31
   },
   {
-   "de": "v2",
-   "para": "scp",
-   "reta": true,
-   "desloc_para": 161
-  },
-  {
-   "de": "fora",
+   "de": "b0",
    "para": "deny",
    "cor": "vermelho",
-   "desloc_para": -32
+   "desloc_para": -108
   },
   {
-   "de": "v1",
+   "de": "b1",
    "para": "deny",
    "cor": "vermelho",
-   "desloc_para": 50
+   "desloc_para": -94
+  },
+  {
+   "de": "b2",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": -113
+  },
+  {
+   "de": "b3",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": -43
+  },
+  {
+   "de": "b4",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": 27
+  },
+  {
+   "de": "b5",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": 97
   },
   {
    "de": "scp",
    "para": "iam",
    "rotulo": "passes",
-   "desloc_de": -24,
+   "desloc_de": 0,
    "desloc_para": 0
   },
   {
@@ -249,13 +321,13 @@
  "textos": [
   {
    "x": 380,
-   "y": 636,
+   "y": 832,
    "texto": "Who gets through",
    "mono": true
   },
   {
-   "x": 810,
-   "y": 636,
+   "x": 870,
+   "y": 832,
    "texto": "Where it goes",
    "mono": true
   }

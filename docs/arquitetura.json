@@ -1,6 +1,6 @@
 {
  "largura": 1180,
- "altura": 670,
+ "altura": 870,
  "zonas": [
   {
    "tipo": "internet",
@@ -8,7 +8,7 @@
    "x": 16,
    "y": 16,
    "w": 310,
-   "h": 630
+   "h": 830
   },
   {
    "tipo": "aws",
@@ -16,16 +16,16 @@
    "x": 346,
    "y": 16,
    "w": 818,
-   "h": 630
+   "h": 830
   }
  ],
  "caixas": [
   {
-   "id": "br",
+   "id": "ok0",
    "estilo": "destaque",
-   "titulo": "Pessoa no Brasil ou EUA",
+   "titulo": "Dev, região aprovada",
    "linhas": [
-    "console ou CLI"
+    "com as 3 tags obrigatórias"
    ],
    "x": 36,
    "y": 108,
@@ -33,7 +33,7 @@
    "h": 70
   },
   {
-   "id": "svc",
+   "id": "ok1",
    "estilo": "destaque",
    "titulo": "Lambda → DynamoDB",
    "linhas": [
@@ -45,11 +45,11 @@
    "h": 70
   },
   {
-   "id": "vpce",
+   "id": "ok2",
    "estilo": "destaque",
-   "titulo": "App via VPC Endpoint",
+   "titulo": "Role da plataforma",
    "linhas": [
-    "`aws:SourceVpce vpce-*`"
+    "break-glass · Control Tower"
    ],
    "x": 36,
    "y": 288,
@@ -57,40 +57,76 @@
    "h": 70
   },
   {
-   "id": "v2",
-   "estilo": "destaque",
-   "titulo": "RunInstances com IMDSv2",
+   "id": "b0",
+   "estilo": "bloqueio",
+   "titulo": "Chamada para eu-west-1",
    "linhas": [
-    "`HttpTokens=required`"
+    "região fora da lista"
    ],
    "x": 36,
-   "y": 378,
+   "y": 398,
    "w": 270,
-   "h": 70
+   "h": 58
   },
   {
-   "id": "fora",
+   "id": "b1",
+   "estilo": "bloqueio",
+   "titulo": "Access key ou log desligado",
+   "linhas": [
+    "CreateAccessKey · StopLogging"
+   ],
+   "x": 36,
+   "y": 468,
+   "w": 270,
+   "h": 58
+  },
+  {
+   "id": "b2",
+   "estilo": "bloqueio",
+   "titulo": "Sem criptografia",
+   "linhas": [
+    "EBS sem criptografia · S3 via HTTP"
+   ],
+   "x": 36,
+   "y": 538,
+   "w": 270,
+   "h": 58
+  },
+  {
+   "id": "b3",
+   "estilo": "bloqueio",
+   "titulo": "Instância sem tags",
+   "linhas": [
+    "falta owner"
+   ],
+   "x": 36,
+   "y": 608,
+   "w": 270,
+   "h": 58
+  },
+  {
+   "id": "b4",
    "estilo": "bloqueio",
    "titulo": "IP fora do Brasil e EUA",
    "linhas": [
     "VPN de outro país, bot"
    ],
    "x": 36,
-   "y": 474,
+   "y": 678,
    "w": 270,
-   "h": 64
+   "h": 58
   },
   {
-   "id": "v1",
+   "id": "b5",
    "estilo": "bloqueio",
    "titulo": "RunInstances com IMDSv1",
    "linhas": [
     "ou hop limit maior que 2"
    ],
    "x": 36,
-   "y": 556,
+   "y": 748,
    "w": 270,
-   "h": 64
+   "h": 58
   },
   {
    "id": "scp",
@@ -103,44 +139,62 @@
     {
      "n": "1",
      "y": 96,
-     "texto": "IP do Brasil ou EUA",
+     "texto": "Região aprovada",
      "selo": "libera",
      "sub": [
-      "aws:SourceIp · 270 blocos /13 (LACNIC + ARIN)"
+      "us-east-1 · sa-east-1 · serviços globais"
      ]
     },
     {
      "n": "2",
-     "y": 186,
-     "texto": "chamada de serviço AWS",
+     "y": 166,
+     "texto": "IAM e base de segurança",
      "selo": "libera",
      "sub": [
-      "aws:ViaAWSService = true"
+      "sem access key · CloudTrail ligado"
      ]
     },
     {
      "n": "3",
-     "y": 276,
-     "texto": "veio por VPC Endpoint",
+     "y": 236,
+     "texto": "Criptografia e TLS",
      "selo": "libera",
      "sub": [
-      "aws:SourceVpce = vpce-*"
+      "EBS · RDS · EFS · S3"
      ]
     },
     {
      "n": "4",
-     "y": 366,
-     "texto": "IMDSv2 e hop limit até 2",
+     "y": 306,
+     "texto": "Tags obrigatórias",
+     "selo": "libera",
+     "sub": [
+      "owner · cost-center · environment"
+     ]
+    },
+    {
+     "n": "5",
+     "y": 376,
+     "texto": "IMDSv2, hop limit até 2",
      "selo": "libera",
      "sub": [
       "MetadataHttpTokens = required"
+     ]
+    },
+    {
+     "n": "6",
+     "y": 446,
+     "texto": "IP do Brasil ou EUA",
+     "selo": "libera",
+     "sub": [
+      "270 blocos /13 · ou VPC endpoint"
      ]
     }
    ],
    "x": 380,
    "y": 52,
    "w": 380,
-   "h": 400
+   "h": 480
   },
   {
    "id": "deny",
@@ -148,12 +202,12 @@
    "titulo": "Deny explícito (AccessDenied)",
    "linhas": [
     "vence qualquer Allow,",
-    "inclusive admin e root da conta"
+    "inclusive admin da conta e root"
    ],
    "x": 380,
-   "y": 470,
+   "y": 560,
    "w": 380,
-   "h": 136
+   "h": 240
   },
   {
    "id": "iam",
@@ -163,9 +217,9 @@
     "só agora decide o que",
     "cada pessoa pode fazer"
    ],
-   "x": 810,
-   "y": 182,
-   "w": 330,
+   "x": 870,
+   "y": 246,
+   "w": 280,
    "h": 92
   },
   {
@@ -173,69 +227,87 @@
    "estilo": "destaque",
    "titulo": "API executa",
    "linhas": [
-    "EC2 · DynamoDB · S3 · ..."
+    "EC2 · RDS · S3 · Lambda · ..."
    ],
-   "x": 810,
-   "y": 340,
-   "w": 330,
+   "x": 870,
+   "y": 420,
+   "w": 280,
    "h": 80
   },
   {
    "id": "mgmt",
    "estilo": "tracejada",
-   "titulo": "Conta de gerenciamento",
+   "titulo": "Conta management",
    "linhas": [
-    "SCP não se aplica:",
-    "não rodar workload aqui"
+    "SCPs não se aplicam:",
+    "nunca rode workloads aqui"
    ],
-   "x": 810,
-   "y": 486,
-   "w": 330,
+   "x": 870,
+   "y": 640,
+   "w": 280,
    "h": 92
   }
  ],
  "setas": [
   {
-   "de": "br",
+   "de": "ok0",
    "para": "scp",
    "reta": true,
-   "desloc_para": -109
+   "desloc_para": -149
   },
   {
-   "de": "svc",
+   "de": "ok1",
    "para": "scp",
    "reta": true,
-   "desloc_para": -19
+   "desloc_para": -59
   },
   {
-   "de": "vpce",
+   "de": "ok2",
    "para": "scp",
    "reta": true,
-   "desloc_para": 71
+   "desloc_para": 31
   },
   {
-   "de": "v2",
-   "para": "scp",
-   "reta": true,
-   "desloc_para": 161
-  },
-  {
-   "de": "fora",
+   "de": "b0",
    "para": "deny",
    "cor": "vermelho",
-   "desloc_para": -32
+   "desloc_para": -108
   },
   {
-   "de": "v1",
+   "de": "b1",
    "para": "deny",
    "cor": "vermelho",
-   "desloc_para": 50
+   "desloc_para": -94
+  },
+  {
+   "de": "b2",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": -113
+  },
+  {
+   "de": "b3",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": -43
+  },
+  {
+   "de": "b4",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": 27
+  },
+  {
+   "de": "b5",
+   "para": "deny",
+   "cor": "vermelho",
+   "desloc_para": 97
   },
   {
    "de": "scp",
    "para": "iam",
    "rotulo": "passa",
-   "desloc_de": -24,
+   "desloc_de": 0,
    "desloc_para": 0
   },
   {
@@ -249,13 +321,13 @@
  "textos": [
   {
    "x": 380,
-   "y": 636,
-   "texto": "Quem pode passar",
+   "y": 832,
+   "texto": "Quem passa",
    "mono": true
   },
   {
-   "x": 810,
-   "y": 636,
+   "x": 870,
+   "y": 832,
    "texto": "Para onde vai",
    "mono": true
   }

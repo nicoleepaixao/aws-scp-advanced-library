@@ -1,0 +1,102 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyLongLivedIamUserCredentials",
+      "Effect": "Deny",
+      "Action": [
+        "iam:CreateUser",
+        "iam:CreateAccessKey",
+        "iam:CreateLoginProfile",
+        "iam:UpdateLoginProfile"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/OrganizationAccountAccessRole",
+            "arn:aws:iam::*:role/AWSControlTowerExecution",
+            "arn:aws:iam::*:role/break-glass-admin"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ProtectPlatformRoles",
+      "Effect": "Deny",
+      "Action": [
+        "iam:AttachRolePolicy",
+        "iam:DeleteRole",
+        "iam:DeleteRolePermissionsBoundary",
+        "iam:DeleteRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:PutRolePermissionsBoundary",
+        "iam:PutRolePolicy",
+        "iam:UpdateAssumeRolePolicy",
+        "iam:UpdateRole",
+        "iam:UpdateRoleDescription"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/OrganizationAccountAccessRole",
+        "arn:aws:iam::*:role/AWSControlTowerExecution",
+        "arn:aws:iam::*:role/break-glass-admin",
+        "arn:aws:iam::*:role/aws-reserved/*"
+      ],
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/OrganizationAccountAccessRole",
+            "arn:aws:iam::*:role/AWSControlTowerExecution",
+            "arn:aws:iam::*:role/break-glass-admin"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ProtectSecurityBaseline",
+      "Effect": "Deny",
+      "Action": [
+        "cloudtrail:DeleteTrail",
+        "cloudtrail:PutEventSelectors",
+        "cloudtrail:StopLogging",
+        "cloudtrail:UpdateTrail",
+        "config:DeleteConfigurationRecorder",
+        "config:DeleteDeliveryChannel",
+        "config:StopConfigurationRecorder",
+        "guardduty:DeleteDetector",
+        "guardduty:DisassociateFromAdministratorAccount",
+        "guardduty:DisassociateFromMasterAccount",
+        "guardduty:UpdateDetector",
+        "securityhub:DisableSecurityHub",
+        "access-analyzer:DeleteAnalyzer"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/OrganizationAccountAccessRole",
+            "arn:aws:iam::*:role/AWSControlTowerExecution",
+            "arn:aws:iam::*:role/break-glass-admin"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "DenyLeavingOrganization",
+      "Effect": "Deny",
+      "Action": "organizations:LeaveOrganization",
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyRootUser",
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "ArnLike": {
+          "aws:PrincipalArn": "arn:aws:iam::*:root"
+        }
+      }
+    }
+  ]
+}
