@@ -54,6 +54,22 @@ done
 
 The evaluator covers only the condition operators used here, and SCPs are one layer of the AWS authorization logic. A passing test shows the policy logic is right; it does not replace a rollout in a sandbox OU.
 
+## Validated in a real AWS account
+
+`scripts/real-account-test.sh` attaches each policy to a sandbox member account, one at a time, as a role that is **not** exempt, and checks what is denied and what still works. Every call is a `--dry-run` or targets a resource that does not exist, so it creates nothing and costs nothing. It first runs the same checks with no test policy attached, to prove each denial comes from the SCP.
+
+Last run: November 2026, Organizations, `us-east-1`. **19 of 19 checks as expected**, every test policy and role deleted at the end.
+
+| Policy | Denied | Still allowed |
+|---|---|---|
+| region-restriction | EC2 in `eu-west-1` | EC2 in `us-east-1`, IAM (global) |
+| iam-lockdown | create IAM user, change `OrganizationAccountAccessRole`, stop CloudTrail | change a regular role |
+| require-encryption | unencrypted EBS volume, disable EBS default encryption | encrypted EBS volume |
+| tag-enforcement | EC2 without the required tags | EC2 with `owner`, `cost-center`, `environment` |
+| imdsv2-enforcement | EC2 with IMDSv1 | EC2 with IMDSv2 and hop limit 2 |
+
+`geo-restriction` is covered only by the unit tests. It denies by source IP, so a real test from an IP outside the list would lock the tester out of the account.
+
 ## Study notes
 
 Handouts with objectives, architecture, concepts using this repo's code, summary, quiz and resources: [English](docs/apostila.en.pdf) · [Português](docs/apostila.pdf)

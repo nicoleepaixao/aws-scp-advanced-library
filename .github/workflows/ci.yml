@@ -23,4 +23,4 @@ jobs:
           pip install pytest
           pytest -v
       - name: Shell script
-        run: bash -n policies/geo-restriction/generate-country-cidrs.sh
+        run: bash -n policies/geo-restriction/generate-country-cidrs.sh scripts/real-account-test.sh
